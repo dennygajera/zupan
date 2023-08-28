@@ -25,17 +25,20 @@ class InputListViewModel {
     
     @Published public var speech: String?
     @Published public var commandList = [CommandInput]()
+    @Published public var currentState: State?
     
     func startVoiceRecognizer() {
         voiceManager.startRecognition()
         
         voiceManager.activeSpeech = { [weak self] activeSpeech in
             self?.speech = activeSpeech
+            self?.currentState = .listening
         }
         
-        voiceManager.finalSpeechAndCommand = { [weak self] command, description in
+        voiceManager.finalSpeechAndCommand = { [weak self] isFinal, command, description in
             guard let command = command, let description = description else { return }
             self?.validateSpeech("\(command) " + description)
+            self?.currentState = isFinal ? .waiting : .listening
         }
     }
     

@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 
     var viewModel = InputListViewModel()
     private var cancellables: Set<AnyCancellable> = []
+    
+    @IBOutlet weak var statusLabel: UILabel?
     @IBOutlet weak var speechLabel: UILabel?
     
     override func viewDidLoad() {
@@ -29,8 +31,13 @@ class ViewController: UIViewController {
         
         
         viewModel.$commandList.sink(receiveValue: { [weak self] commandList in
-            if commandList != nil {
                 print(commandList)
+        }).store(in: &cancellables)
+        
+        viewModel.$currentState.sink(receiveValue: { [weak self] currentState in
+            if currentState != nil {
+//                self?.statusLabel?.text = currentState.rawValue
+                print(currentState)
             }
         }).store(in: &cancellables)
     }

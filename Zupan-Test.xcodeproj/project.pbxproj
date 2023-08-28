@@ -109,7 +109,6 @@
 				F490EA1B2A9CAC490073D0E5 /* Utility */,
 				F490E9EB2A9CA9A70073D0E5 /* AppDelegate.swift */,
 				F490E9ED2A9CA9A70073D0E5 /* SceneDelegate.swift */,
-				F490E9EF2A9CA9A70073D0E5 /* ViewController.swift */,
 				F490E9F12A9CA9A70073D0E5 /* Main.storyboard */,
 				F490E9F42A9CA9A80073D0E5 /* Assets.xcassets */,
 				F490E9F62A9CA9A80073D0E5 /* LaunchScreen.storyboard */,
@@ -155,6 +154,7 @@
 		F490EA1F2A9CAF7B0073D0E5 /* InputList */ = {
 			isa = PBXGroup;
 			children = (
+				F490E9EF2A9CA9A70073D0E5 /* ViewController.swift */,
 				F490EA202A9CAF960073D0E5 /* InputListViewModel.swift */,
 			);
 			path = InputList;

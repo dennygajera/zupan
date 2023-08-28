@@ -17,10 +17,9 @@ class VoiceRecognitionManager {
 
     private var activationCommands: [Command] = []
     public var activeCommand: Command?
-    public var lastCommandDescription: String?
-    public var finalSpeechAndCommand: ((Command?, String?) -> ())?
-    public var activeCommandDescription: ((Command?, String?) -> ())?
+    public var finalSpeechAndCommand: ((Bool, Command?, String?) -> ())?
     public var activeSpeech: ((String?) -> ())?
+    
     
     init(activationCommands: [Command]) {
         self.activationCommands = activationCommands
@@ -68,13 +67,14 @@ class VoiceRecognitionManager {
                     if let command = self?.isActivationCommand(recognizedText) {
                         if self?.activeCommand == nil {
                             self?.activeCommand = command
+                            self?.finalSpeechAndCommand?(false, self?.activeCommand, command.rawValue)
                             self?.restartRecognise()
                         }
                     }
                     
                     if error != nil || isFinal {
                         print("speech done")
-                        self?.finalSpeechAndCommand?(self?.activeCommand, recognizedText)
+                        self?.finalSpeechAndCommand?(true, self?.activeCommand, recognizedText)
                         self?.activeCommand = nil
                         self?.restartRecognise()
                     }
