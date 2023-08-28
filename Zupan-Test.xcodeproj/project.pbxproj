@@ -16,6 +16,9 @@
 		F490EA032A9CA9A80073D0E5 /* Zupan_TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA022A9CA9A80073D0E5 /* Zupan_TestTests.swift */; };
 		F490EA0D2A9CA9A80073D0E5 /* Zupan_TestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA0C2A9CA9A80073D0E5 /* Zupan_TestUITests.swift */; };
 		F490EA0F2A9CA9A80073D0E5 /* Zupan_TestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA0E2A9CA9A80073D0E5 /* Zupan_TestUITestsLaunchTests.swift */; };
+		F490EA1D2A9CAC580073D0E5 /* SpeechRecognize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA1C2A9CAC580073D0E5 /* SpeechRecognize.swift */; };
+		F490EA212A9CAF960073D0E5 /* InputListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA202A9CAF960073D0E5 /* InputListViewModel.swift */; };
+		F490EA232A9CE7890073D0E5 /* CommandInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EA222A9CE7890073D0E5 /* CommandInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		F490EA082A9CA9A80073D0E5 /* Zupan-TestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Zupan-TestUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F490EA0C2A9CA9A80073D0E5 /* Zupan_TestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zupan_TestUITests.swift; sourceTree = "<group>"; };
 		F490EA0E2A9CA9A80073D0E5 /* Zupan_TestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zupan_TestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F490EA1C2A9CAC580073D0E5 /* SpeechRecognize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognize.swift; sourceTree = "<group>"; };
+		F490EA202A9CAF960073D0E5 /* InputListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputListViewModel.swift; sourceTree = "<group>"; };
+		F490EA222A9CE7890073D0E5 /* CommandInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,8 @@
 		F490E9EA2A9CA9A70073D0E5 /* Zupan-Test */ = {
 			isa = PBXGroup;
 			children = (
+				F490EA1E2A9CAF740073D0E5 /* Views */,
+				F490EA1B2A9CAC490073D0E5 /* Utility */,
 				F490E9EB2A9CA9A70073D0E5 /* AppDelegate.swift */,
 				F490E9ED2A9CA9A70073D0E5 /* SceneDelegate.swift */,
 				F490E9EF2A9CA9A70073D0E5 /* ViewController.swift */,
@@ -125,6 +133,31 @@
 				F490EA0E2A9CA9A80073D0E5 /* Zupan_TestUITestsLaunchTests.swift */,
 			);
 			path = "Zupan-TestUITests";
+			sourceTree = "<group>";
+		};
+		F490EA1B2A9CAC490073D0E5 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				F490EA1C2A9CAC580073D0E5 /* SpeechRecognize.swift */,
+				F490EA222A9CE7890073D0E5 /* CommandInput.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		F490EA1E2A9CAF740073D0E5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F490EA1F2A9CAF7B0073D0E5 /* InputList */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F490EA1F2A9CAF7B0073D0E5 /* InputList */ = {
+			isa = PBXGroup;
+			children = (
+				F490EA202A9CAF960073D0E5 /* InputListViewModel.swift */,
+			);
+			path = InputList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +291,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F490EA232A9CE7890073D0E5 /* CommandInput.swift in Sources */,
 				F490E9F02A9CA9A70073D0E5 /* ViewController.swift in Sources */,
 				F490E9EC2A9CA9A70073D0E5 /* AppDelegate.swift in Sources */,
+				F490EA1D2A9CAC580073D0E5 /* SpeechRecognize.swift in Sources */,
 				F490E9EE2A9CA9A70073D0E5 /* SceneDelegate.swift in Sources */,
+				F490EA212A9CAF960073D0E5 /* InputListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +481,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,6 +510,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

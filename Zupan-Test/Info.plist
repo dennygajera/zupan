@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Zupan-Test app would like to use Sppech recognition to give better user experience</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Zupan-Test app would like to use Sppech recognition to give better user experience</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
