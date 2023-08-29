@@ -12,7 +12,22 @@ struct CommandInput {
     var value: String?
 }
 
-enum State {
-    case waiting
-    case listening
+protocol CommandInputViewModel {
+    var commandString: String {get}
+    var commandValue: String {get}
+}
+
+class CommandInputDataItem: CommandInputViewModel {
+    private var command: CommandInput!
+    init(_ command: CommandInput) {
+        self.command = command
+    }
+    
+    var commandString: String {
+        command.command ?? ""
+    }
+    
+    var commandValue: String {
+        command.value ?? ""
+    }
 }

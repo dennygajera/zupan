@@ -15,19 +15,39 @@ enum Command: String, CaseIterable {
     case reset = "reset"
     
     static func activationCommands() -> [Command] {
-        return [.code, .count]
+        return [.code, .count, .back]
     }
+}
+
+enum State {
+    case waiting
+    case listening
 }
 
 
 class InputListViewModel {
+    
+    struct Constant {
+        static let waitingForCommand = "Waiting for command"
+        static let activeCommand = "Active Command"
+        
+    }
+    
+    //MARK: Private Properties
     private let voiceManager = VoiceRecognitionManager(activationCommands: Command.activationCommands())
     
+    //MARK: Public Properties
     @Published public var speech: String?
-    @Published public var commandList = [CommandInput]()
-    @Published public var currentState: State?
+    @Published public var currentState: State = .waiting
+    public var commandList = [CommandInput]()
+    public var activeCommand: String { voiceManager.activeCommand?.rawValue ?? "" }
+    public var noOfCommands: Int { self.commandList.count }
     
+    var reloadList: (()->())?
+    
+    //MARK: Methods
     func startVoiceRecognizer() {
+        
         voiceManager.startRecognition()
         
         voiceManager.activeSpeech = { [weak self] activeSpeech in
@@ -37,7 +57,11 @@ class InputListViewModel {
         
         voiceManager.finalSpeechAndCommand = { [weak self] isFinal, command, description in
             guard let command = command, let description = description else { return }
-            self?.validateSpeech("\(command) " + description)
+            if isFinal {
+                self?.validateSpeech("\(command) " + description)
+            } else {
+                self?.speech = "\(command)"
+            }
             self?.currentState = isFinal ? .waiting : .listening
         }
     }
@@ -96,16 +120,20 @@ class InputListViewModel {
         return "\(intVal)"
     }
     
+    //MARK: Command's Methods
     private func isCommand(_ word: String) -> Bool {
         return Command.allCases.filter { $0.rawValue.lowercased() == word.lowercased() }.count > 0
     }
     
     private func saveCommand(_ command: CommandInput) {
+        guard let value = command.value, value.count > 0 else { return }
         commandList.append(command)
+        reloadList?()
     }
     
     private func removeLastCommand() {
         commandList = commandList.dropLast()
+        reloadList?()
     }
     
     func wordToNumber(_ word: String) -> Int? {
@@ -125,4 +153,8 @@ class InputListViewModel {
         return wordToNumberMapping[word.lowercased()]
     }
 
+    //MARK: Cell Data
+    func dataForCell(at indexPath: IndexPath) -> CommandInputViewModel {
+        return CommandInputDataItem(commandList[indexPath.section])
+    }
 }

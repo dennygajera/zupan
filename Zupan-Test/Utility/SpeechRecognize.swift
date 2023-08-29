@@ -10,21 +10,29 @@ import Speech
 import AVKit
 
 class VoiceRecognitionManager {
+    
+    //MARK: Private properties
+    
     private let audioEngine = AVAudioEngine()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let request = SFSpeechAudioBufferRecognitionRequest()
+    private let stopTimerSeconds = 5.0
     private var recognitionTask: SFSpeechRecognitionTask?
-
     private var activationCommands: [Command] = []
+    
+    //MARK: Public properties
     public var activeCommand: Command?
     public var finalSpeechAndCommand: ((Bool, Command?, String?) -> ())?
     public var activeSpeech: ((String?) -> ())?
+    public var speech: String?
+    public var stopTimer = Timer()
     
-    
+    //MARK: Life Cycle
     init(activationCommands: [Command]) {
         self.activationCommands = activationCommands
     }
 
+    //MARK: Methods
     public func startRecognition() {
         SFSpeechRecognizer.requestAuthorization { authStatus in
             if authStatus == .authorized {
@@ -46,8 +54,8 @@ class VoiceRecognitionManager {
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
             self.request.append(buffer)
         }
-
         audioEngine.prepare()
+        
         do {
             try audioEngine.start()
             request.shouldReportPartialResults = true
@@ -55,12 +63,15 @@ class VoiceRecognitionManager {
                 
                 var isFinal = false
                 if let result = result {
+                    
+                    self?.resetTimer()
                     let recognizedText = result.bestTranscription.formattedString
                     isFinal = result.isFinal
 
                     // active command speech
                     if self?.activeCommand != nil {
-                        self?.activeSpeech?(recognizedText)
+                        self?.speech = recognizedText
+                        self?.activeSpeech?("\(self?.activeCommand?.rawValue ?? "") " + recognizedText)
                     }
                     
                     //  found new command
@@ -72,8 +83,9 @@ class VoiceRecognitionManager {
                         }
                     }
                     
+                    // final segment
                     if error != nil || isFinal {
-                        print("speech done")
+                        debugPrint("speech done")
                         self?.finalSpeechAndCommand?(true, self?.activeCommand, recognizedText)
                         self?.activeCommand = nil
                         self?.restartRecognise()
@@ -85,6 +97,21 @@ class VoiceRecognitionManager {
         } catch {
             // Handle errors
         }
+    }
+    
+    private func resetTimer() {
+        stopTimer.invalidate()
+        stopTimer = Timer.scheduledTimer(withTimeInterval: stopTimerSeconds, repeats: false) { [weak self] timer in
+            self?.stopTimer.invalidate()
+            self?.stopTimerCalled()
+        }
+    }
+    
+    private func stopTimerCalled() {
+        finalSpeechAndCommand?(true, activeCommand, self.speech)
+        self.speech = ""
+        activeCommand = nil
+        restartRecognise()
     }
     
     private func restartRecognise() {
